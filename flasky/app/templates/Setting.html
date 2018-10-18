@@ -1,0 +1,111 @@
+{% extends "inherit.html" %}
+{% block title %}System Info{% endblock %}
+{% block inner %}
+<script>
+var testEle = document.getElementById("LST");
+testEle.setAttribute("class","active-menu");
+</script>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            Setting <small>Detail</small>
+                        </h1>
+						<ol class="breadcrumb">
+  <li><a href="{{ url_for('main.index') }}">Home</a></li>
+  <li class="active">Setting</li>
+</ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Monitor Control
+                                </div>
+                                <div class="panel-body" align="right">
+
+                                    {% if start %}
+                                    <a class="btn btn-warning btn-lg" style="width:220px" href="{{ url_for('main.monitor_restart') }}">
+                                      Restart
+                                    </a>
+                                    <a class="btn btn-danger btn-lg" style="width:220px" href="{{ url_for('main.monitor_shutdown') }}">
+                                      Shutdown
+                                    </a>
+                                    {% else %}
+                                    <a class="btn btn-success btn-lg" style="width:220px" href="{{ url_for('main.monitor_start') }}">
+                                      Start
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Interface Choose
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Interface Name</th>
+                                                <th>Detail Info</th>
+                                                <th>State</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in json_list %}
+                                            <tr>
+                                                <td>{{ item['id'] }}</td>
+                                                <td>{{ item['name'] }}</td>
+                                                {% if item['info']!="NULL" %}
+                                                <td>{{ item['info'] }}</td>
+                                                {% endif %}
+                                                {% if item['info']=="NULL" %}
+                                                <td></td>
+                                                {% endif %}
+                                                {% if item['id']==UseId %}
+                                                <td><a class="btn btn-primary btn-sm" disabled="disabled" style="width:130px">Now Using</a></td>
+                                                {% else %}
+                                                <td><a class="btn btn-warning btn-sm" href="{{ url_for('main.change_interface',token=item['id']) }}" style="width:130px">Click to Change</a></td>
+                                                {% endif %}
+
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Data Clean
+                                </div>
+                                <div class="panel-body" align="right">
+
+
+                                    <a class="btn btn-danger btn-lg" style="width:220px" href="#">
+                                      Click to Clean
+                                    </a>
+
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+				<footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+{% endblock %}
